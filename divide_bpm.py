@@ -1,3 +1,4 @@
+import sys
 import math
 from collections import OrderedDict
 
@@ -11,18 +12,15 @@ class Divider:
         self.username = username
         self.spotify = self.get_spotify()
 
-
     @staticmethod
     def get_id_from_uri(uri):
         return uri.split(':')[-1]
-
 
     @staticmethod
     def sort_dict(dict_random):
         dict_sorted = OrderedDict(
             sorted(dict_random.items(), key=lambda x: x[1], reverse=True))
         return dict_sorted
-
 
     def get_spotify(self):
         token = util.prompt_for_user_token(
@@ -31,8 +29,8 @@ class Divider:
         spotify = spotipy.Spotify(auth=token)
         return spotify
 
-
     def get_tempos_dict(self, playlist_uri):
+        # Seems to get only 100 tracks
         playlist = self.spotify.user_playlist(self.username, playlist_uri)
         tempos_dict = {}
         for i, track_dict in enumerate(playlist['tracks']['items'], 1):
@@ -43,18 +41,15 @@ class Divider:
         tempos_dict = self.sort_dict(tempos_dict)
         return tempos_dict
 
-
     def create_playlist(self, name):
         playlist_dict = self.spotify.user_playlist_create(
             self.username, name, public=False)
         return playlist_dict['uri']
 
-
     def add_to_playlist(self, playlist_uri, track_uri):
         playlist_id = self.get_id_from_uri(playlist_uri)
         self.spotify.user_playlist_add_tracks(
             self.username, playlist_id, [track_uri])
-
 
     def divide(self, playlist_uri):
         playlists_dict = {}
@@ -72,10 +67,11 @@ class Divider:
 
 
 def main():
-    uri = 'spotify:user:ferniss:playlist:4HV5coo1t02ZfFfOWDQ5QR'  # carnaval
-    # uri = 'spotify:user:ferniss:playlist:54OuamNpPqUoYzJJPgt1Nb'  # pinchar
-    # uri = 'spotify:user:ferniss:playlist:0kNHFNoDBVu9u8SpwgWTos'  # cajón de sastre
-    uri = 'spotify:user:ferniss:playlist:3DsmWF9iyzA3m4Y9E1db6i'  # 2018
+    try:
+        uri = sys.argv[1]
+    except IndexError:
+        uri = 'spotify:user:ferniss:playlist:3DsmWF9iyzA3m4Y9E1db6i'  # 2018
+        print('No URI was provided. Using', uri)
 
     divider = Divider('ferniss')
     divider.divide(uri)
