@@ -6,6 +6,7 @@ from collections import OrderedDict
 
 import spotipy
 import spotipy.util as util
+from spotipy.client import SpotifyException
 
 
 class Divider:
@@ -53,8 +54,13 @@ class Divider:
 
     def add_to_playlist(self, playlist_uri, track_uri):
         playlist_id = self.get_id_from_uri(playlist_uri)
-        self.spotify.user_playlist_add_tracks(
-            self.username, playlist_id, [track_uri])
+        try:
+            self.spotify.user_playlist_add_tracks(
+                self.username, playlist_id, [track_uri])
+            return True
+        except SpotifyException:
+            return False
+
 
     def divide(self, playlist_uri):
         playlists_dict = {}
@@ -67,7 +73,9 @@ class Divider:
             else:
                 playlist_uri = self.create_playlist(playlist_name)
                 playlists_dict[playlist_name] = playlist_uri
-            self.add_to_playlist(playlist_uri, track_uri)
+            if not self.add_to_playlist(playlist_uri, track_uri):
+                print('Spotify API rate limit exceeded')
+                break
 
 
 
