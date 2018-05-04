@@ -8,7 +8,7 @@ This is a toy app to divide a Spotify playlist in multiple playlists sorted by b
 
 ## Usage
 Get the playlist URI by right-clicking on it, go to `Share` and `Copy Spotify URI`. Pass it as an argument to the Python script:
-```
+```shell
 JAZZ_URI="spotify:user:spotify:playlist:37i9dQZF1DWTR4ZOXTfd9K"
 python divide_bpm.py $JAZZ_URI
 ```
