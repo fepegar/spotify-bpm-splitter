@@ -1,6 +1,6 @@
-# Spotify BPM sorter
+# Spotify BPM splitter
 
-This is a toy app to divide a Spotify playlist in multiple playlists sorted by bpm using [`spotipy`](http://spotipy.readthedocs.io/en/latest/).
+This is a toy app to split a Spotify playlist in multiple playlists sorted by tempo / BPM using [`spotipy`](http://spotipy.readthedocs.io/en/latest/).
 
 ## Requirements
 1. `pip install spotipy`
@@ -10,7 +10,7 @@ This is a toy app to divide a Spotify playlist in multiple playlists sorted by b
 Get the playlist URI by right-clicking on it, go to `Share` and `Copy Spotify URI`. Pass it as an argument to the Python script:
 ```shell
 JAZZ_URI="spotify:user:spotify:playlist:37i9dQZF1DWTR4ZOXTfd9K"
-python divide_bpm.py $JAZZ_URI
+./splitter $JAZZ_URI
 ```
 
 ## Caveats

@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+"""
+Script to split a Spotify playlist in multiple playlists sorted by tempo / BPM.
+"""
+
 import sys
 import math
 from collections import OrderedDict
@@ -9,7 +13,7 @@ import spotipy.util as util
 from spotipy.client import SpotifyException
 
 
-class Divider:
+class Splitter:
 
     def __init__(self, username):
         self.username = username
@@ -62,8 +66,7 @@ class Divider:
         except SpotifyException:
             return False
 
-
-    def divide(self, playlist_uri):
+    def split(self, playlist_uri):
         playlists_dict = {}
         tempos_dict = self.get_tempos_dict(playlist_uri)
         for track_uri, tempo in tempos_dict.items():
@@ -88,8 +91,8 @@ def main():
         uri = 'spotify:user:ferniss:playlist:3DsmWF9iyzA3m4Y9E1db6i'  # 2018
         print('No URI was provided. Using', uri)
 
-    divider = Divider('ferniss')
-    divider.divide(uri)
+    splitter = Splitter('ferniss')
+    splitter.split(uri)
 
 
 if __name__ == '__main__':
