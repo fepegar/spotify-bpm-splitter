@@ -37,9 +37,12 @@ class Divider:
         tempos_dict = {}
         for i, track_dict in enumerate(playlist['tracks']['items'], 1):
             track = track_dict['track']
-            features = self.spotify.audio_features(track['uri'])[0]
-            print(f"{i:3} {track['name']:40} {features['tempo']}")
-            tempos_dict[track['uri']] = features['tempo']
+            try:
+                features = self.spotify.audio_features(track['uri'])[0]
+                print(f"{i:3} {track['name']:40} {features['tempo']}")
+                tempos_dict[track['uri']] = features['tempo']
+            except TypeError:
+                print(f"[{track['name']} skipped]")
         tempos_dict = self.sort_dict(tempos_dict)
         return tempos_dict
 
