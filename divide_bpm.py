@@ -48,6 +48,7 @@ class Divider:
         return tempos_dict
 
     def create_playlist(self, name):
+        print(f'Creating playlist "{name}"')
         playlist_dict = self.spotify.user_playlist_create(
             self.username, name, public=False)
         return playlist_dict['uri']
@@ -73,7 +74,8 @@ class Divider:
             else:
                 playlist_uri = self.create_playlist(playlist_name)
                 playlists_dict[playlist_name] = playlist_uri
-            if not self.add_to_playlist(playlist_uri, track_uri):
+            success = self.add_to_playlist(playlist_uri, track_uri)
+            if not success:
                 print('Spotify API rate limit exceeded')
                 break
 
