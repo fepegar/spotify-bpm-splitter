@@ -11,7 +11,7 @@ Get the playlist [URI](https://en.wikipedia.org/wiki/Uniform_Resource_Identifier
 
 ```shell
 $ JAZZ_URI="spotify:user:spotify:playlist:37i9dQZF1DWTR4ZOXTfd9K"
-$ ./splitter $JAZZ_URI
+$ python splitter $JAZZ_URI
 ```
 
 ## Caveats
